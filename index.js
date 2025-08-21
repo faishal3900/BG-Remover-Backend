@@ -6,11 +6,9 @@ const { exec } = require("child_process");
 const path = require("path");
 
 const app = express();
-
 app.get("/api/health", (req, res) => {
   res.send("Hello World");
 });
-
 
 app.use(
   cors({
@@ -19,6 +17,7 @@ app.use(
       "http://localhost:5173",
       "http://localhost:5174",
     ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
@@ -49,7 +48,7 @@ app.post("/remove-bg", upload.single("image"), (req, res) => {
     });
   });
 });
-const PORT = 3000
+const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server started on http://localhost:${PORT}`);
 });
