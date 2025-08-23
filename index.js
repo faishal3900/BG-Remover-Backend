@@ -1,9 +1,19 @@
-const express = require("express");
-const multer = require("multer");
-const cors = require("cors");
-const fs = require("fs");
-const { exec } = require("child_process");
-const path = require("path");
+import express from "express";
+import multer from "multer";
+import cors from "cors";
+import fs from "fs";
+import { exec } from "child_process";
+import path from "path";
+import mongoose from "mongoose";
+import { MONGOURL, PORT } from "./key.js";
+
+// const express = require("express");
+// const multer = require("multer");
+// const cors = require("cors");
+// const fs = require("fs");
+// const { exec } = require("child_process");
+// const path = require("path");
+// const mongoose = require ("mongoose")
 
 const app = express();
 app.get("/api/health", (req, res) => {
@@ -12,12 +22,18 @@ app.get("/api/health", (req, res) => {
 
 app.use(
   cors({
-    origin: [
-      "https://bg-remover-frontend-seven.vercel.app",
-      "http://localhost:5173",
-      "http://localhost:5174",
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: function (origin, callback) {
+      const allowedOrigins = [
+        "https://bg-remover-frontend-seven.vercel.app",
+        "http://localhost:5173",
+        "http://localhost:5174",
+      ];
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
@@ -48,7 +64,12 @@ app.post("/remove-bg", upload.single("image"), (req, res) => {
     });
   });
 });
-const PORT = 3000;
+
+mongoose
+  .connect(MONGOURL)
+  .then(() => console.log("Database connected successfully"))
+  .catch((err) => console.log("something wrong", err));
+
 app.listen(PORT, () => {
   console.log(`Server started on http://localhost:${PORT}`);
 });

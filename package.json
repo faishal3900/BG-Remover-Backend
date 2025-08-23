@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-   "dev":"node index.js",
-   "Build": "node index.js"
+    "dev": "node index.js",
+    "start": "nodemon index.js",
+    "Build": "node index.js"
   },
   "keywords": [],
   "author": "",
@@ -13,7 +14,9 @@
   "dependencies": {
     "child_process": "^1.0.2",
     "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "mongoose": "^8.18.0",
     "multer": "^2.0.2"
   },
   "devDependencies": {
