@@ -100,7 +100,7 @@ app.use(cors({
   origin: ["https://bg-remover-frontend-seven.vercel.app"],
   credentials: true,
 }));
-app.options("*", cors());
+// app.options("*", cors());
 
 const upload = multer({ dest: "uploads/" });
 
