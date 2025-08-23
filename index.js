@@ -74,8 +74,6 @@
 //   console.log(`Server started on http://localhost:${PORT}`);
 // });
 
-
-
 import express from "express";
 import multer from "multer";
 import cors from "cors";
@@ -87,30 +85,27 @@ import { MONGOURL, PORT } from "./key.js";
 
 const app = express();
 
-app.get("/api/health", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
 // ✅ Fix CORS (removed slash)
-const allowedOrigins = [
-  "https://bg-remover-frontend-seven.vercel.app", // no trailing slash!
-  "http://localhost:5173",
-  "http://localhost:5174",
-];
+// const allowedOrigins = [
+//   "https://bg-remover-frontend-seven.vercel.app", // no trailing slash!
+//   "http://localhost:5173",
+//   "http://localhost:5174",
+// ];
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: [
+      "https://bg-remover-frontend-seven.vercel.app",
+      "http://localhost:5173",
+      "http://localhost:5174",
+    ],
     credentials: true,
   })
 );
-
 const upload = multer({ dest: "uploads/" });
 
 app.post("/remove-bg", upload.single("image"), (req, res) => {
