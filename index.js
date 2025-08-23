@@ -154,6 +154,7 @@ app.use(express.json());
 // Enhanced CORS configuration
 const allowedOrigins = [
   "https://bg-remover-frontend-seven.vercel.app",
+  "blob:https://bg-remover-frontend-seven.vercel.app",
   "http://localhost:5173",
   "http://localhost:5174",
 ];
