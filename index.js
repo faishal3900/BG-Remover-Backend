@@ -98,11 +98,7 @@ app.get("/", (req, res) => {
 
 app.use(
   cors({
-    origin: [
-      "https://bg-remover-frontend-seven.vercel.app",
-      "http://localhost:5173",
-      "http://localhost:5174",
-    ],
+    origin: ["https://bg-remover-frontend-seven.vercel.app"],
     credentials: true,
   })
 );
