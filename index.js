@@ -96,12 +96,12 @@ app.get("/", (req, res) => {
 //   "http://localhost:5174",
 // ];
 
-app.use(
-  cors({
-    origin: ["https://bg-remover-frontend-seven.vercel.app"],
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: ["https://bg-remover-frontend-seven.vercel.app"],
+  credentials: true,
+}));
+app.options("*", cors());
+
 const upload = multer({ dest: "uploads/" });
 
 app.post("/remove-bg", upload.single("image"), (req, res) => {
