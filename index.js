@@ -178,6 +178,8 @@ app.use(
   })
 );
 
+app.options("/", cors()); // Valid route
+
 // Handle preflight requests
 // app.options("*", cors());
 
