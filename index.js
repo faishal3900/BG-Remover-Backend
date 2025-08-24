@@ -159,7 +159,7 @@ const allowedOrigins = [
   "http://localhost:5174",
 ];
 
-app.use(cors());
+app.use(cors(allowedOrigins));
 
 // app.options("/", cors()); // Valid route
 
