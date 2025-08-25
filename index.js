@@ -151,20 +151,17 @@ const app = express();
 // Middleware to parse JSON bodies
 app.use(express.json());
 
-// Enhanced CORS configuration
-const allowedOrigins = [
-  "https://bg-remover-frontend-seven.vercel.app",
-  "blob:https://bg-remover-frontend-seven.vercel.app",
-  "http://localhost:5173",
-  "http://localhost:5174",
-];
-
-app.use(cors(allowedOrigins));
-
-// app.options("/", cors()); // Valid route
-
-// Handle preflight requests
-// app.options("*", cors());
+app.use(
+  cors({
+    origin: [
+      "https://bg-remover-frontend-seven.vercel.app",
+      "http://localhost:5173",
+      "http://localhost:5174",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
 // Your routes
 app.get("/", (req, res) => {
@@ -174,12 +171,10 @@ app.get("/", (req, res) => {
 const upload = multer({ dest: "uploads/" });
 
 app.post("/remove-bg", upload.single("image"), (req, res) => {
-  // Add CORS headers to the response
-  res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
-  res.header("Access-Control-Allow-Credentials", "true");
-
   const inputPath = req.file.path;
   const outputPath = `outputs/${req.file.filename}.png`;
+  console.log(inputPath);
+  console.log(outputPath);
 
   if (!fs.existsSync("outputs")) {
     fs.mkdirSync("outputs");
